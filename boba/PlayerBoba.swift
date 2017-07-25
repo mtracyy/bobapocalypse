@@ -9,20 +9,25 @@
 import SpriteKit
 import GameplayKit
 
-class PlayerBoba: SKSpriteNode {
-    
+class PlayerBoba: SKSpriteNode, SKPhysicsContactDelegate {
+    let swipeLeft: SKAction = SKAction.init(named: "swipeLeft")!
+    let swipeRight: SKAction = SKAction.init(named: "swipeRight")!
     var direction: Direction = .none {
         didSet {
             if direction == .left {
-                self.physicsBody?.applyImpulse(CGVector(dx: -200, dy: 0))
+                if !(self.position.x <= -600) {
+                    run(swipeLeft)
+                }
             } else if direction == .right {
-                self.physicsBody?.applyImpulse(CGVector(dx: 200, dy: 0))
+                if !(self.position.x >= 600) {
+                    run(swipeRight)
+                }
 
             }
             
         }
     }
-    
+
     
 //    var touchStartPoint:(location: CGPoint, time: TimeInterval)? //starting point of swipe; stores location and time
 //    let minDistance: CGFloat = 25 //parameters of swipe: distance, speed

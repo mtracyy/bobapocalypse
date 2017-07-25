@@ -17,6 +17,8 @@
 		B134DEF71F256AB2007FD14A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B134DEF61F256AB2007FD14A /* Assets.xcassets */; };
 		B134DEFA1F256AB2007FD14A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B134DEF81F256AB2007FD14A /* LaunchScreen.storyboard */; };
 		B134DF041F256D81007FD14A /* playerBoba.sks in Resources */ = {isa = PBXBuildFile; fileRef = B134DF031F256D81007FD14A /* playerBoba.sks */; };
+		B1F5120E1F27D6A500A0D7D8 /* Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5120D1F27D6A500A0D7D8 /* Items.swift */; };
+		B1F512101F27D89000A0D7D8 /* EnemyBoba.sks in Resources */ = {isa = PBXBuildFile; fileRef = B1F5120F1F27D89000A0D7D8 /* EnemyBoba.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		B134DEF91F256AB2007FD14A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B134DEFB1F256AB2007FD14A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B134DF031F256D81007FD14A /* playerBoba.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = playerBoba.sks; path = ../playerBoba.sks; sourceTree = "<group>"; };
+		B1F5120D1F27D6A500A0D7D8 /* Items.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Items.swift; sourceTree = "<group>"; };
+		B1F5120F1F27D89000A0D7D8 /* EnemyBoba.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EnemyBoba.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,8 @@
 				B134DF031F256D81007FD14A /* playerBoba.sks */,
 				B134DEEB1F256AB2007FD14A /* GameScene.sks */,
 				B134DEED1F256AB2007FD14A /* Actions.sks */,
+				B1F5120D1F27D6A500A0D7D8 /* Items.swift */,
+				B1F5120F1F27D89000A0D7D8 /* EnemyBoba.sks */,
 				B134DEEF1F256AB2007FD14A /* GameScene.swift */,
 				B11627271F2666A3008F9F21 /* PlayerBoba.swift */,
 				B134DEF11F256AB2007FD14A /* GameViewController.swift */,
@@ -143,6 +149,7 @@
 				B134DEEC1F256AB2007FD14A /* GameScene.sks in Resources */,
 				B134DEF71F256AB2007FD14A /* Assets.xcassets in Resources */,
 				B134DEFA1F256AB2007FD14A /* LaunchScreen.storyboard in Resources */,
+				B1F512101F27D89000A0D7D8 /* EnemyBoba.sks in Resources */,
 				B134DF041F256D81007FD14A /* playerBoba.sks in Resources */,
 				B134DEEE1F256AB2007FD14A /* Actions.sks in Resources */,
 			);
@@ -156,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B11627281F2666A3008F9F21 /* PlayerBoba.swift in Sources */,
+				B1F5120E1F27D6A500A0D7D8 /* Items.swift in Sources */,
 				B134DEF01F256AB2007FD14A /* GameScene.swift in Sources */,
 				B134DEF21F256AB2007FD14A /* GameViewController.swift in Sources */,
 				B134DEEA1F256AB2007FD14A /* AppDelegate.swift in Sources */,

@@ -16,17 +16,21 @@ enum Direction {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+
     var playerBoba: PlayerBoba!
-     var touchStartPoint:(location: CGPoint, time: TimeInterval)? //starting point of swipe; stores location and time
-     let minDistance: CGFloat = 20 //parameters of swipe: distance, speed
-     let minSpeed: CGFloat = 100
-     let maxSpeed: CGFloat = 6000
+    var enemyBoba: SKNode!
+
+    var touchStartPoint:(location: CGPoint, time: TimeInterval)? //starting point of swipe; stores location and time
+    let minDistance: CGFloat = 20 //parameters of swipe: distance, speed
+    let minSpeed: CGFloat = 100
+    let maxSpeed: CGFloat = 6000
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         
         playerBoba = self.childNode(withName: "//playerBoba") as! PlayerBoba
     }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first { //saves location and time of first touch
@@ -35,7 +39,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        var swiped = false
+        var swiped: Bool = false
+        
         if let touch = touches.first, let startTime = self.touchStartPoint?.time, let startLocation = self.touchStartPoint?.location {
             let location = touch.location(in: self)
             let dx = location.x  - startLocation.x
@@ -51,17 +56,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     let y = abs(dy/distance) > 0.4 ? Int(sign(Float(dy))) : 0
                     
                     swiped = true
-                    switch (x, y) {
-                    case (-1,0): //left
-                        playerBoba.direction = .left
-                        print("swiped left")
-                    case (1,0): //right
-                        playerBoba.direction = .right
-                        print("swiped right")
-                    default:
-                        swiped = false
-                        break
                     
+                    
+                    if swiped {
+                        switch (x, y) {
+                        case (-1,0): //left
+                            playerBoba.direction = .left
+                        case (1,0): //right
+                            playerBoba.direction = .right
+                        default:
+                            swiped = false
+                            break
+                        }
                     }
                 }
             }
@@ -72,5 +78,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    }
     
     override func update(_ currentTime: TimeInterval) {
+
+
     }
+
 }

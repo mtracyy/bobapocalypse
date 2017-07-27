@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var playerBoba: PlayerBoba!
     
     var scrollLayer: SKNode!
-    var enemySource: SKSpriteNode!
+    var enemySource: EnemyBoba!
     var enemyLayer: SKNode!
     var spawnTimer: CFTimeInterval = 0
     let scrollSpeed: CGFloat = 200
@@ -43,12 +43,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         scrollLayer = self.childNode(withName: "scrollLayer")
         
-        enemySource = self.childNode(withName: "//enemyBoba") as! SKSpriteNode
+        enemySource = self.childNode(withName: "//enemyBoba") as! EnemyBoba
         enemyLayer = self.childNode(withName: "enemyLayer")
         
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         
         scoreLabel.text = "\(playerScore)"
+        
     }
     
     
@@ -99,27 +100,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let contactA = contact.bodyA //get refs to body involved in collision
         let contactB = contact.bodyB
         
-        let nodeA = contactA.node as! SKSpriteNode  //get refs to physics body parent nodes
-        let nodeB = contactB.node as! SKSpriteNode
+        let nodeA = contactA.node //as! SKSpriteNode  //get refs to physics body parent nodes
+        let nodeB = contactB.node //as! SKSpriteNode
     
         if contactA.categoryBitMask == 2 && contactB.categoryBitMask == 1 {
-            if nodeA.size.width <= nodeB.size.width {
-                playerScore += Int(nodeA.size.width)
-                print("1")
-                nodeA.removeFromParent()
-            } else {
-                playerScore -= 1
+            if let enemy = nodeA as? EnemyBoba, let player = nodeB as? PlayerBoba {
+                if enemy.size.width <= player.size.width {
+                    playerScore += enemy.getPoints()
+                    print("1")
+                    nodeA?.removeFromParent()
+                    print(enemy.size.width)
+                } else {
+                    playerScore -= 1
+                }
             }
     
             scoreLabel.text = String(playerScore)
             return
         } else if contactA.categoryBitMask == 1 && contactB.categoryBitMask == 2 {
-            if nodeB.size.width <= nodeA.size.width {
-                playerScore += Int(nodeB.size.width)
-                nodeB.removeFromParent()
-                print("2")
-            } else {
-                playerScore -= 1
+            if let enemy = nodeB as? EnemyBoba, let player = nodeA as? PlayerBoba {
+                if enemy.size.width <= player.size.width {
+                    playerScore += enemy.getPoints()
+                    nodeB?.removeFromParent()
+                    print(enemy.size.width)
+                } else {
+                    playerScore -= 1
+                }
             }
             
             scoreLabel.text = String(playerScore)
@@ -140,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if spawnTimer >= 1.0 {
-            let newEnemy = enemySource.copy() as! SKSpriteNode
+            let newEnemy = enemySource.copy() as! EnemyBoba
             let newScale = randomBetweenNumbers(firstNum: 0.2, secondNum: 1.5)
             newEnemy.setScale(CGFloat(newScale))
             enemyLayer.addChild(newEnemy)

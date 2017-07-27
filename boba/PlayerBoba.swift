@@ -10,6 +10,9 @@ import SpriteKit
 import GameplayKit
 
 class PlayerBoba: SKSpriteNode, SKPhysicsContactDelegate {
+    
+    var length: CGFloat = 0
+    
     let swipeLeft: SKAction = SKAction.init(named: "swipeLeft")!
     let swipeRight: SKAction = SKAction.init(named: "swipeRight")!
     var direction: Direction = .none {
@@ -30,6 +33,7 @@ class PlayerBoba: SKSpriteNode, SKPhysicsContactDelegate {
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) { //required for subclass to work
         super.init(texture: texture, color: color, size: size)
+        length = self.size.width
     }
     
     required init?(coder aDecoder: NSCoder) { //required for subclass to work

@@ -11,9 +11,12 @@ import GameplayKit
 
 class EnemyBoba: SKSpriteNode {
     
+    var points:Int = 0
     
-    
-    
+    func getPoints() -> Int {
+        points = Int(self.size.width * 0.3)
+        return points
+    }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) { //required for subclass to work
         super.init(texture: texture, color: color, size: size)

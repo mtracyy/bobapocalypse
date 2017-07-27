@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B11627281F2666A3008F9F21 /* PlayerBoba.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11627271F2666A3008F9F21 /* PlayerBoba.swift */; };
+		B12192161F2A417C001BF85E /* EnemyBoba.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12192151F2A417C001BF85E /* EnemyBoba.swift */; };
 		B134DEEA1F256AB2007FD14A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134DEE91F256AB2007FD14A /* AppDelegate.swift */; };
 		B134DEEC1F256AB2007FD14A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B134DEEB1F256AB2007FD14A /* GameScene.sks */; };
 		B134DEEE1F256AB2007FD14A /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B134DEED1F256AB2007FD14A /* Actions.sks */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		B11627271F2666A3008F9F21 /* PlayerBoba.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerBoba.swift; sourceTree = "<group>"; };
+		B12192151F2A417C001BF85E /* EnemyBoba.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyBoba.swift; sourceTree = "<group>"; };
 		B134DEE61F256AB2007FD14A /* boba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B134DEE91F256AB2007FD14A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B134DEEB1F256AB2007FD14A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				B1F5120F1F27D89000A0D7D8 /* EnemyBoba.sks */,
 				B134DEEF1F256AB2007FD14A /* GameScene.swift */,
 				B11627271F2666A3008F9F21 /* PlayerBoba.swift */,
+				B12192151F2A417C001BF85E /* EnemyBoba.swift */,
 				B134DEF11F256AB2007FD14A /* GameViewController.swift */,
 				B134DEF31F256AB2007FD14A /* Main.storyboard */,
 				B134DEF61F256AB2007FD14A /* Assets.xcassets */,
@@ -164,6 +167,7 @@
 			files = (
 				B11627281F2666A3008F9F21 /* PlayerBoba.swift in Sources */,
 				B1F5120E1F27D6A500A0D7D8 /* Items.swift in Sources */,
+				B12192161F2A417C001BF85E /* EnemyBoba.swift in Sources */,
 				B134DEF01F256AB2007FD14A /* GameScene.swift in Sources */,
 				B134DEF21F256AB2007FD14A /* GameViewController.swift in Sources */,
 				B134DEEA1F256AB2007FD14A /* AppDelegate.swift in Sources */,

@@ -16,19 +16,39 @@ enum Direction {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-
+    let fixedDelta: CFTimeInterval = 1.0 / 60.0
+    
     var playerBoba: PlayerBoba!
-    var enemyBoba: SKNode!
+    
+    var scrollLayer: SKNode!
+    var enemySource: SKSpriteNode!
+    var enemyLayer: SKNode!
+    var spawnTimer: CFTimeInterval = 0
+    let scrollSpeed: CGFloat = 200
+    
+    var scoreLabel: SKLabelNode!
+    var playerScore: Int = 0
 
     var touchStartPoint:(location: CGPoint, time: TimeInterval)? //starting point of swipe; stores location and time
     let minDistance: CGFloat = 20 //parameters of swipe: distance, speed
     let minSpeed: CGFloat = 100
     let maxSpeed: CGFloat = 6000
     
+    let locations = [70, 160, 250]
+    
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         
         playerBoba = self.childNode(withName: "//playerBoba") as! PlayerBoba
+        
+        scrollLayer = self.childNode(withName: "scrollLayer")
+        
+        enemySource = self.childNode(withName: "//enemyBoba") as! SKSpriteNode
+        enemyLayer = self.childNode(withName: "enemyLayer")
+        
+        scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
+        
+        scoreLabel.text = "\(playerScore)"
     }
     
     
@@ -57,7 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     swiped = true
                     
-                    
                     if swiped {
                         switch (x, y) {
                         case (-1,0): //left
@@ -73,13 +92,97 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        let contactA = contact.bodyA //get refs to body involved in collision
+        let contactB = contact.bodyB
+        
+        let nodeA = contactA.node as! SKSpriteNode  //get refs to physics body parent nodes
+        let nodeB = contactB.node as! SKSpriteNode
+    
+        if contactA.categoryBitMask == 2 && contactB.categoryBitMask == 1 {
+            if nodeA.size.width <= nodeB.size.width {
+                playerScore += Int(nodeA.size.width)
+                print("1")
+                nodeA.removeFromParent()
+            } else {
+                playerScore -= 1
+            }
+    
+            scoreLabel.text = String(playerScore)
+            return
+        } else if contactA.categoryBitMask == 1 && contactB.categoryBitMask == 2 {
+            if nodeB.size.width <= nodeA.size.width {
+                playerScore += Int(nodeB.size.width)
+                nodeB.removeFromParent()
+                print("2")
+            } else {
+                playerScore -= 1
+            }
+            
+            scoreLabel.text = String(playerScore)
+            return
+        
+        }
+        
+    
+    }
+    
+    func updateEnemies() {
+        enemyLayer.position.y += scrollSpeed * CGFloat(fixedDelta)
+        for enemy in enemyLayer.children {
+            let enemyPos = enemyLayer.convert(enemy.position, to: self)
+            if enemyPos.y  >= 600 {
+                enemy.removeFromParent()
+            }
+        }
+        
+        if spawnTimer >= 1.0 {
+            let newEnemy = enemySource.copy() as! SKSpriteNode
+            let newScale = randomBetweenNumbers(firstNum: 0.2, secondNum: 1.5)
+            newEnemy.setScale(CGFloat(newScale))
+            enemyLayer.addChild(newEnemy)
+            let spawnLoc = CGPoint(x: locations.random(), y: -570)
+            newEnemy.position = self.convert(spawnLoc, to: enemyLayer)
+            spawnTimer = 0
+        }
+    
+    }
+    
+    func scrollWorld() {
+        scrollLayer.position.y += 50 * CGFloat(fixedDelta)
+        for bubbles in scrollLayer.children as! [SKSpriteNode] {
+            let bubblesPos = scrollLayer.convert(bubbles.position, to: self)
+            if bubblesPos.y  >= bubbles.size.height * 1.5 {
+                let newPos = CGPoint(x: bubblesPos.x, y: -(bubbles.size.height / 2 ))
+                bubbles.position = self.convert(newPos, to: scrollLayer)
+            }
+        }
+        
+    }
 //    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        let touch = touches.first! as! UITouch
 //    }
     
     override func update(_ currentTime: TimeInterval) {
-
-
+        scrollWorld()
+        updateEnemies()
+        spawnTimer += fixedDelta
+//        print(playerBoba.position.x)
+        
     }
 
+    
+    func randomBetweenNumbers(firstNum: CGFloat, secondNum: CGFloat) -> CGFloat{
+        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
+    }
+}
+
+extension Array {
+    func random() -> Element {
+        let index = Int(arc4random_uniform(UInt32(self.count)))
+        return self[index]
+    }
 }

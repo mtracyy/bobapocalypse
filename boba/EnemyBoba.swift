@@ -14,7 +14,7 @@ class EnemyBoba: SKSpriteNode {
     var points:Int = 0
     
     func getPoints() -> Int {
-        points = Int(self.size.width * 0.3)
+        points = Int(self.size.width * 0.2)
         return points
     }
     

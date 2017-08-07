@@ -21,13 +21,18 @@ enum Direction {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let fixedDelta: CFTimeInterval = 1.0 / 60.0
     let zoomOut: SKAction = SKAction.init(named: "zoomOut")!
+    let flicker: SKAction = SKAction.init(named: "flicker")!
     
     var gameState: GameSceneState = .active
     
     var playerBoba: PlayerBoba!
+    var boss: SKSpriteNode!
     
     var coinLayer: SKNode!
     var teaLeaf: SKSpriteNode!
+    var shadow: SKSpriteNode!
+    var warning: SKSpriteNode!
+    
     var scrollLayer: SKNode!
     var enemySource: EnemyBoba!
     var enemyLayer: SKNode!
@@ -35,6 +40,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var coinTimer: CFTimeInterval = 0
     var scrollSpeed: CGFloat = 200
     var spawnVar: CFTimeInterval = 1.0
+    var bossTimer: CFTimeInterval = 0
+    var bossSpawnTime: CFTimeInterval = 15.0
     
     var scaleFactor: Double = 1.0
     var sizeLabel: SKLabelNode!
@@ -75,10 +82,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         playerBoba = self.childNode(withName: "//playerBoba") as! PlayerBoba
+        boss = self.childNode(withName: "boss") as! SKSpriteNode
         
         scrollLayer = self.childNode(withName: "scrollLayer")
         coinLayer = self.childNode(withName: "coinLayer")
         teaLeaf = self.childNode(withName: "teaLeaf") as! SKSpriteNode
+        shadow = self.childNode(withName: "shadow") as! SKSpriteNode
+        warning = shadow.childNode(withName: "warning") as! SKSpriteNode
+        shadow.isHidden = true
+    
         
         enemySource = self.childNode(withName: "//enemyBoba") as! EnemyBoba
         enemyLayer = self.childNode(withName: "enemyLayer")
@@ -260,6 +272,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
+        if (contactA.categoryBitMask == 8 && contactB.categoryBitMask == 1) {
+            if let player = nodeB as? SKSpriteNode {
+                gameState = .gameOver
+                player.removeFromParent()
+            }
+        } else if (contactA.categoryBitMask == 1 && contactB.categoryBitMask == 8) {
+            if let player = nodeA as? SKSpriteNode {
+                gameState = .gameOver
+                player.removeFromParent()
+            }
+        }
+        
+        if (contactA.categoryBitMask == 8 && contactB.categoryBitMask == 2) || (contactA.categoryBitMask == 8 && contactB.categoryBitMask == 4) {
+            if let toBeRemoved = nodeB as? SKSpriteNode {
+                toBeRemoved.removeFromParent()
+            }
+        } else if (contactA.categoryBitMask == 2 && contactB.categoryBitMask == 8) || (contactA.categoryBitMask == 4 && contactB.categoryBitMask == 8) {
+            if let toBeRemoved = nodeA as? SKSpriteNode {
+                toBeRemoved.removeFromParent()
+            }
+        }
+        
     
     }
     
@@ -270,16 +304,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for case let enemy as EnemyBoba in enemyLayer.children {
             for case let enemyLabel as SKLabelNode in enemy.children {
                 if let label = Int(enemyLabel.text!) {
-                    if (enemy.size.width > playerBoba.size.width) && label < playerScore {
-                        let zoomOut: SKAction = SKAction.scale(by: CGFloat(playerBoba.size.width/enemy.size.width), duration: 1.0)
+                    let zoomOutgen: SKAction = SKAction.scale(by: CGFloat(1/(scaleFactor*1.3)), duration: 0.5)
+                    enemy.run(zoomOutgen)
+                    
+                    if (enemy.size.width > playerBoba.size.width) && (label < playerScore) {
+                        let zoomOut: SKAction = SKAction.scale(by: CGFloat(playerBoba.size.width/enemy.size.width), duration: 0.5)
                         enemy.run(zoomOut)
                     } else if label == playerScore {
                         let adjust: SKAction = SKAction.scale(to: playerBoba.size, duration: 1.0)
                         enemy.run(adjust)
-                    } else if (enemy.size.width > playerBoba.size.width && label > playerScore) || (enemy.size.width < playerBoba.size.width && label < playerScore) {
-                        let zoomOutgen: SKAction = SKAction.scale(by: CGFloat(1/(scaleFactor * 1.3)), duration: 1.0)
-                        enemy.run(zoomOutgen)
                     }
+//                    if (enemy.size.width > playerBoba.size.width && label > playerScore) || (enemy.size.width < playerBoba.size.width && label < playerScore) || (enemy.size.width < playerBoba.size.width && label > playerScore) {
+//                        let zoomOutgen: SKAction = SKAction.scale(by: CGFloat(1/(scaleFactor)), duration: 0.5)
+//                        enemy.run(zoomOutgen)
+//                    }
+                    
+//                    if (enemy.size.width > playerBoba.size.width) || (enemy.size.width < playerBoba.size.width) {
+//                        let zoomOutgen: SKAction = SKAction.scale(by: CGFloat(1/(scaleFactor*1.05)), duration: 0.5)
+//                        enemy.run(zoomOutgen)
+//                    }
                 }
             }
         }
@@ -301,6 +344,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        }
 //    }
     
+    func spawnBoss() {
+        if bossTimer >= bossSpawnTime + Double(randomBetweenNumbers(firstNum: 5.0, secondNum: 15.0)) && playerBoba.size.width < 100.0 {
+            print("working")
+            let bossSpawnLoc = CGPoint(x: locations.random(), y: Int(randomBetweenNumbers(firstNum: 85, secondNum: 330)))
+            let wait1 = SKAction.wait(forDuration: 2.0)
+            let wait2 = SKAction.wait(forDuration: 1.0)
+            let shadowFin = SKAction.scale(by: (3.0/2.0), duration: 1.0)
+            let shadowSpawn = SKAction.run {
+                self.shadow.isHidden = false
+                self.warning.run(self.flicker)
+                let approach: SKAction = SKAction.scale(by: 2.0, duration: 2.0)
+                self.shadow.position = bossSpawnLoc
+                self.shadow.run(approach)
+                
+            }
+            let bossSpawn = SKAction.run {
+                self.shadow.run(shadowFin)
+                self.boss.position = CGPoint(x: bossSpawnLoc.x, y: 960)
+                let attack: SKAction = SKAction.move(to: CGPoint(x: bossSpawnLoc.x, y: bossSpawnLoc.y + (self.boss.size.height/2)), duration: 1.0)
+                self.boss.run(attack)
+            }
+            let retreat = SKAction.run {
+                let retreatBoss: SKAction = SKAction.moveTo(y: 960, duration: 1.0)
+                let retreatShadow: SKAction = SKAction.scale(by: (1/3.0), duration: 2.0)
+                self.boss.run(retreatBoss)
+                self.shadow.run(retreatShadow)
+            }
+            let end = SKAction.run {
+                self.shadow.isHidden = true
+            }
+            let spawn = SKAction.sequence([shadowSpawn, wait1, bossSpawn, wait2, retreat, wait1, end])
+            self.run(spawn)
+            bossTimer = 0
+        }
+    }
+    
     func updateEnemies() {
     
         enemyLayer.position.y += scrollSpeed * CGFloat(fixedDelta)
@@ -315,7 +394,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let spawnLoc = CGPoint(x: locations.random(), y: -50)
             let newEnemy = enemySource.copy() as! EnemyBoba
             let newSize = sizeLabel.copy() as! SKLabelNode
-            let newScale = randomBetweenNumbers(firstNum: 0.2, secondNum: 1.5)
+            let newScale = randomBetweenNumbers(firstNum: 0.2, secondNum: 1.2)
             newEnemy.setScale(CGFloat(newScale))
 //            if let newSize = newEnemy.childNode(withName: "sizeLabel")?.copy() as? SKLabelNode {
 //                newSize.text = "\(newEnemy.getPoints())"
@@ -323,7 +402,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //                newEnemy.addChild(newSize)
 //            }
             newSize.text = "\(Int(newEnemy.getPoints() + (playerScore - 10)))"
-            newSize.fontSize = 15
             newEnemy.position = self.convert(spawnLoc, to: enemyLayer)
 //            newSize.position = self.convert(spawnLoc, to: enemySource)
             enemyLayer.addChild(newEnemy)
@@ -377,8 +455,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scrollWorld()
         updateEnemies()
         updateCoins()
+        spawnBoss()
         spawnTimer += fixedDelta
         coinTimer += fixedDelta
+        bossTimer += fixedDelta
 //        print(playerBoba.position.x)
         
     }

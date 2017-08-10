@@ -9,21 +9,47 @@
 import SpriteKit
 import GameplayKit
 
-public var coinCount: Int = 0
+//public var coinCount: Int = 0
 enum GameSceneState {
     case active, gameOver
 }
 
-enum Direction {     
+//enum themeState {
+//    case tea, table
+//}
+var savedScore: Int?
+
+var theme = "tea"
+
+enum Direction {
     case right, left, none
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    var coinCount = UserDefaults.standard.integer(forKey: "COINS")
+    var highScore = UserDefaults.standard.integer(forKey: "HIGHSCORE")
+    
+    
     let fixedDelta: CFTimeInterval = 1.0 / 60.0
     let zoomOut: SKAction = SKAction.init(named: "zoomOut")!
     let flicker: SKAction = SKAction.init(named: "flicker")!
+    let burst: SKAction = SKAction.init(named: "burst")!
+    let fadeToWhite: SKAction = SKAction.init(named: "FadeToWhite")!
+    let fadeIn: SKAction = SKAction.init(named: "fadeIn")!
+    let fadeOut: SKAction = SKAction.init(named: "fadeOut")!
+    let wait: SKAction = SKAction.wait(forDuration: 3.30)
+    
+    var ready = false
+    var halt = false
     
     var gameState: GameSceneState = .active
+//    public var theme: themeState = .tea {
+//        didSet {
+//            if theme == .table {
+//                loadNextLevel()
+//            }
+//        }
+//    }
     
     var playerBoba: PlayerBoba!
     var boss: SKSpriteNode!
@@ -32,6 +58,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var teaLeaf: SKSpriteNode!
     var shadow: SKSpriteNode!
     var warning: SKSpriteNode!
+    var crack: SKSpriteNode!
+    var glassLayer: SKNode!
+    var whiteTransition: SKSpriteNode!
     
     var scrollLayer: SKNode!
     var enemySource: EnemyBoba!
@@ -45,8 +74,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var scaleFactor: Double = 1.0
     var sizeLabel: SKLabelNode!
+    
     var scoreLabel: SKLabelNode!
-    var playerScore: Int = 10 {
+    var playerScore: Int = savedScore ?? 10 {
         didSet {
             updatePlayerSize()
         }
@@ -73,10 +103,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //gameover
     var buttonRestart: MSButtonNode!
-//    var coinStatLabel: SKLabelNode!
-//    var totalCoinsLabel: SKLabelNode!
-    var coinStat: SKLabelNode!
-    var totalCoins: SKLabelNode!
+    var coinStatLabel: SKLabelNode!
+    var totalCoinsLabel: SKLabelNode!
+    var finalScoreLabel: SKLabelNode!
+    var highScoreLabel: SKLabelNode!
+    var newHighScore: SKSpriteNode!
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -90,6 +121,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shadow = self.childNode(withName: "shadow") as! SKSpriteNode
         warning = shadow.childNode(withName: "warning") as! SKSpriteNode
         shadow.isHidden = true
+        
+        crack = self.childNode(withName: "crack") as? SKSpriteNode
+        crack?.isHidden = true
+        glassLayer = self.childNode(withName: "glassNode")
+        glassLayer?.isHidden = true
+        whiteTransition = self.childNode(withName: "whiteTransition") as? SKSpriteNode
+        whiteTransition?.isHidden = true
     
         
         enemySource = self.childNode(withName: "//enemyBoba") as! EnemyBoba
@@ -98,26 +136,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         sizeLabel = enemySource.childNode(withName: "//sizeLabel") as! SKLabelNode
         coinLabel = self.childNode(withName: "coinLabel") as! SKLabelNode
-        coinStat = self.childNode(withName: "coinStat") as! SKLabelNode
-        totalCoins = self.childNode(withName: "totalCoins") as! SKLabelNode
+        coinStatLabel = self.childNode(withName: "coinStatLabel") as! SKLabelNode
+        totalCoinsLabel = self.childNode(withName: "totalCoinsLabel") as! SKLabelNode
+        finalScoreLabel = self.childNode(withName: "finalScoreLabel") as! SKLabelNode
+        highScoreLabel = self.childNode(withName: "highScoreLabel") as! SKLabelNode
+        newHighScore = self.childNode(withName: "newHighScore") as! SKSpriteNode
         
         scoreLabel.text = "\(playerScore)"
         coinLabel.text = "\(coinScore)"
-        coinStat.text = "\(coinScore)"
-        totalCoins.text = "\(coinCount)"
+        coinStatLabel.text = "\(coinScore)"
+        totalCoinsLabel.text = "\(coinCount)"
+        
+        coinStatLabel.isHidden = true
+        totalCoinsLabel.isHidden = true
+        finalScoreLabel.isHidden = true
+        highScoreLabel.isHidden = true
+        newHighScore.isHidden = true
+        
+        if theme == "table" {
+            scoreLabel.fontColor = UIColor.black
+            coinLabel.fontColor = UIColor.black
+            coinStatLabel.fontColor = UIColor.black
+            totalCoinsLabel.fontColor = UIColor.black
+            finalScoreLabel.fontColor = UIColor.black
+            highScoreLabel.fontColor = UIColor.black
+        }
+        
+        if theme == "tea" {
+            scoreLabel.fontColor = UIColor.white
+            coinLabel.fontColor = UIColor.white
+            coinStatLabel.fontColor = UIColor.white
+            totalCoinsLabel.fontColor = UIColor.white
+            finalScoreLabel.fontColor = UIColor.white
+            highScoreLabel.fontColor = UIColor.white
+        }
+        
         
         buttonRestart = self.childNode(withName: "buttonRestart") as! MSButtonNode
         buttonRestart.selectedHandler = { [unowned self] in
             let skView = self.view as SKView! //grab ref to our spritekit view
             let scene = GameScene(fileNamed: "GameScene") as GameScene! //load game scene
             scene?.scaleMode = .aspectFill //ensure correct aspect mode
+            theme = "tea"
             skView?.presentScene(scene) //restart game scene
             
         }
         
         buttonRestart.state = .hidden
-        coinStat.isHidden = true
-        totalCoins.isHidden = true
     }
     
     
@@ -209,10 +274,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                 } else {
                     gameState = .gameOver
-                    if coinCount == 0 {
-                        coinCount = coinScore
-                    } else {
-                        coinCount += coinScore
+//                    if coinCount == 0 {
+//                        coinCount = coinScore
+//                    } else {
+////                        coinCount += coinScore
+//                        setCoinTotal()
+//                    }
+                    setCoinTotal()
+                    
+                    if playerScore > highScore {
+                        newHighScore.isHidden = false
+                        saveHighScore()
                     }
                     nodeB?.removeFromParent()
                 }
@@ -245,10 +317,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //                    print(enemy.size.width)
                 } else {
                     gameState = .gameOver
-                    if coinCount == 0 {
-                        coinCount = coinScore
-                    } else {
-                        coinCount += coinScore
+//                    if coinCount == 0 {
+//                        coinCount = coinScore
+//                    } else {
+//                        setCoinTotal()
+//                    }
+                    setCoinTotal()
+                    
+                    if playerScore > highScore {
+                        newHighScore.isHidden = false
+                        saveHighScore()
                     }
                     nodeA?.removeFromParent()
                 }
@@ -347,7 +425,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func spawnBoss() {
         if bossTimer >= bossSpawnTime + Double(randomBetweenNumbers(firstNum: 5.0, secondNum: 15.0)) && playerBoba.size.width < 100.0 {
             print("working")
-            let bossSpawnLoc = CGPoint(x: locations.random(), y: Int(randomBetweenNumbers(firstNum: 85, secondNum: 330)))
+            let bossSpawnLoc = CGPoint(x: locations.random(), y: Int(randomBetweenNumbers(firstNum: 250, secondNum: 400)))
             let wait1 = SKAction.wait(forDuration: 2.0)
             let wait2 = SKAction.wait(forDuration: 1.0)
             let shadowFin = SKAction.scale(by: (3.0/2.0), duration: 1.0)
@@ -385,7 +463,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyLayer.position.y += scrollSpeed * CGFloat(fixedDelta)
         for enemy in enemyLayer.children {
             let enemyPos = enemyLayer.convert(enemy.position, to: self)
-            if enemyPos.y  >= 620 {
+            if enemyPos.y  >= 650 {
                 enemy.removeFromParent()
             }
         }
@@ -395,12 +473,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let newEnemy = enemySource.copy() as! EnemyBoba
             let newSize = sizeLabel.copy() as! SKLabelNode
             let newScale = randomBetweenNumbers(firstNum: 0.2, secondNum: 1.2)
+            
+            if theme == "table" {
+                if newScale <= 0.6 {
+                    newEnemy.texture = SKTexture(imageNamed: "donut")
+                } else if newScale > 0.6 && newScale <= 1.0 {
+                    newEnemy.texture = SKTexture(imageNamed: "breakfast")
+                } else if newScale > 1.0 {
+                    newEnemy.texture = SKTexture(imageNamed: "pizza")
+                }
+                
+                newSize.fontColor = UIColor.black
+            }
+            
             newEnemy.setScale(CGFloat(newScale))
-//            if let newSize = newEnemy.childNode(withName: "sizeLabel")?.copy() as? SKLabelNode {
-//                newSize.text = "\(newEnemy.getPoints())"
-////              newSize.position = self.convert(spawnLoc, to: enemyLayer)
-//                newEnemy.addChild(newSize)
-//            }
             newSize.text = "\(Int(newEnemy.getPoints() + (playerScore - 10)))"
             newEnemy.position = self.convert(spawnLoc, to: enemyLayer)
 //            newSize.position = self.convert(spawnLoc, to: enemySource)
@@ -429,12 +515,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func scrollWorld() {
-        scrollLayer.position.y += 50 * CGFloat(fixedDelta)
-        for bubbles in scrollLayer.children as! [SKSpriteNode] {
-            let bubblesPos = scrollLayer.convert(bubbles.position, to: self)
-            if bubblesPos.y  >= bubbles.size.height * 1.5 {
-                let newPos = CGPoint(x: bubblesPos.x, y: -(bubbles.size.height / 2 ))
-                bubbles.position = self.convert(newPos, to: scrollLayer)
+        if theme == "tea" {
+            scrollLayer.position.y += 50 * CGFloat(fixedDelta)
+            for bubbles in scrollLayer.children as! [SKSpriteNode] {
+                let bubblesPos = scrollLayer.convert(bubbles.position, to: self)
+                if bubblesPos.y  >= bubbles.size.height * 1.5 {
+                    let newPos = CGPoint(x: bubblesPos.x, y: -(bubbles.size.height / 2 ))
+                    bubbles.position = self.convert(newPos, to: scrollLayer)
+                }
+            }
+        } else if theme == "table" {
+            scrollLayer.position.y += scrollSpeed * CGFloat(fixedDelta)
+            for bubbles in scrollLayer.children as! [SKSpriteNode] {
+                let bubblesPos = scrollLayer.convert(bubbles.position, to: self)
+                if bubblesPos.y  >= (bubbles.size.height * 1.5) - (round(scrollSpeed * 0.029)) {
+                    let newPos = CGPoint(x: bubblesPos.x, y: round(-(bubbles.size.height / 2) /*+ (scrollSpeed * 0.28)*/))
+                    bubbles.position = self.convert(newPos, to: scrollLayer)
+                }
             }
         }
         
@@ -442,15 +539,127 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        let touch = touches.first! as! UITouch
 //    }
+    func transition() {
+        let gravityField = SKFieldNode.radialGravityField()
+        gravityField.categoryBitMask = 16
+        gravityField.strength = -0.25
+        let waitGlass = SKAction.wait(forDuration: 2.5)
+        let waitWhite = SKAction.wait(forDuration: 0.5)
+        
+        let glassCrack = SKAction.run {
+            print("glass should crack")
+            self.crack.isHidden = false
+            self.crack.run(self.burst)
+        }
+        
+        let glassShards = SKAction.run {
+            print("shards should show")
+            self.glassLayer.position = CGPoint(x: 160, y: 268)
+            self.glassLayer.isHidden = false
+            gravityField.isEnabled = true
+            gravityField.position = CGPoint(x: 160, y: 284)
+            for glass in self.glassLayer.children as! [SKSpriteNode] {
+                glass.physicsBody?.fieldBitMask = 16
+            }
+        self.addChild(gravityField)
+            
+        }
+        
+        let endTransition = SKAction.run {
+            print("fade should happen")
+            self.whiteTransition.isHidden = false
+            let fadeIn = SKAction.run{
+                self.whiteTransition.run(self.fadeIn)
+            }
+            let fadeOut = SKAction.run{
+                self.whiteTransition.run(self.fadeOut)
+            }
+            let fadeSeq = SKAction.sequence([fadeIn, waitWhite, fadeOut])
+            self.whiteTransition.run(fadeSeq)
+        }
+        
+        let breakGlass = SKAction.sequence([glassCrack, glassShards, waitGlass, endTransition])
+        self.run(breakGlass)
+    }
+    
+    func loadNextLevel() {
+        savedScore = playerScore
+        theme = "table"
+        self.glassLayer.isHidden = true
+        self.whiteTransition.run(self.fadeOut)
+        
+        /* 1) Grab reference to our SpriteKit view */
+        guard let skView = self.view as SKView! else {
+            print("Could not get Skview")
+            return
+        }
+        
+        /* 2) Load Game scene */
+        guard let scene = GameScene(fileNamed:"GameScene2") else {
+            print("Could not make GameScene2, check the name is spelled correctly")
+            return
+        }
+        
+        /* 3) Ensure correct aspect mode */
+        scene.scaleMode = .aspectFill
+        
+        /* Show debug */
+        skView.showsPhysics = true
+        skView.showsDrawCount = true
+        skView.showsFPS = true
+        
+        /* 4) Start game scene */
+        skView.presentScene(scene)
+    }
+    
+    func saveHighScore() {
+        UserDefaults().set(playerScore, forKey: "HIGHSCORE")
+    }
+    
+    func setCoinTotal() {
+        coinCount += coinScore
+        UserDefaults().set(coinCount, forKey: "COINS")
+    }
     
     override func update(_ currentTime: TimeInterval) {
         if gameState == .gameOver {
             buttonRestart.state = .active
-            coinStat.text = "\(coinScore)"
-            totalCoins.text = "\(coinCount)"
-            coinStat.isHidden = false
-            totalCoins.isHidden = false
+            coinStatLabel.text = "\(coinScore)"
+            totalCoinsLabel.text = "\(UserDefaults().integer(forKey: "COINS"))"
+            finalScoreLabel.text = "\(playerScore)"
+            highScoreLabel.text = "\(UserDefaults().integer(forKey: "HIGHSCORE"))"
+            
+            coinStatLabel.isHidden = false
+            totalCoinsLabel.isHidden = false
+            finalScoreLabel.isHidden = false
+            highScoreLabel.isHidden = false
+            
+            savedScore = nil
         }
+        
+        if playerBoba.size.width > 51 && theme != "table" {
+            if halt {
+                ready = false
+            } else {
+                ready = true
+            }
+        }
+        
+        if ready {
+            let trans1: SKAction = SKAction.run {
+                self.transition()
+            }
+            let trans2: SKAction = SKAction.run {
+                self.loadNextLevel()
+            }
+            let transitionSeq = SKAction.sequence([trans1, wait, trans2])
+            run(transitionSeq)
+            
+            halt = true
+            ready = false
+        }
+        
+        
         
         scrollWorld()
         updateEnemies()

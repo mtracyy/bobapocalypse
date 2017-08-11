@@ -245,6 +245,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let nodeA = contactA.node //as! SKSpriteNode  //get refs to physics body parent nodes
         let nodeB = contactB.node //as! SKSpriteNode
+        
     
         if contactA.categoryBitMask == 2 && contactB.categoryBitMask == 1 {
             if let enemy = nodeA as? EnemyBoba, let player = nodeB as? PlayerBoba {
@@ -260,30 +261,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     if spawnVar >= 0.5 {
                         spawnVar -= 0.05
                     }
-//                    enumerateChildNodes(withName: "sizeLabel*", using:
-//                        { (node, stop) -> Void in
-//                            let nodeAPos = self.enemyLayer.convert((nodeA?.position)!, to: self)
-//                            let node1 = self.enemyLayer.convert(node.position, to: self)
-//                            if ((node as? SKLabelNode) != nil) && nodeAPos == node1 {
-//                                node.removeFromParent()
-//                            }
-//                            print(nodeAPos)
-//                            print(node)
-//                    })
-//                    print(enemy.size.width)
                     
                 } else {
                     gameState = .gameOver
-//                    if coinCount == 0 {
-//                        coinCount = coinScore
-//                    } else {
-////                        coinCount += coinScore
-//                        setCoinTotal()
-//                    }
                     setCoinTotal()
                     
                     if playerScore > highScore {
-                        newHighScore.isHidden = false
                         saveHighScore()
                     }
                     nodeB?.removeFromParent()
@@ -325,7 +308,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     setCoinTotal()
                     
                     if playerScore > highScore {
-                        newHighScore.isHidden = false
                         saveHighScore()
                     }
                     nodeA?.removeFromParent()
@@ -424,7 +406,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func spawnBoss() {
         if bossTimer >= bossSpawnTime + Double(randomBetweenNumbers(firstNum: 5.0, secondNum: 15.0)) && playerBoba.size.width < 100.0 {
-            print("working")
             let bossSpawnLoc = CGPoint(x: locations.random(), y: Int(randomBetweenNumbers(firstNum: 250, secondNum: 400)))
             let wait1 = SKAction.wait(forDuration: 2.0)
             let wait2 = SKAction.wait(forDuration: 1.0)
@@ -528,7 +509,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scrollLayer.position.y += scrollSpeed * CGFloat(fixedDelta)
             for bubbles in scrollLayer.children as! [SKSpriteNode] {
                 let bubblesPos = scrollLayer.convert(bubbles.position, to: self)
-                if bubblesPos.y  >= (bubbles.size.height * 1.5) - (round(scrollSpeed * 0.029)) {
+                if bubblesPos.y  >= (bubbles.size.height * 1.5) - (round(scrollSpeed * 0.03)) {
                     let newPos = CGPoint(x: bubblesPos.x, y: round(-(bubbles.size.height / 2) /*+ (scrollSpeed * 0.28)*/))
                     bubbles.position = self.convert(newPos, to: scrollLayer)
                 }
@@ -582,9 +563,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.run(breakGlass)
     }
     
-    func loadNextLevel() {
+    func loadNextLevel(levelName: String, themeName: String) {
         savedScore = playerScore
-        theme = "table"
+        theme = themeName
         self.glassLayer.isHidden = true
         self.whiteTransition.run(self.fadeOut)
         
@@ -595,7 +576,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         /* 2) Load Game scene */
-        guard let scene = GameScene(fileNamed:"GameScene2") else {
+        guard let scene = GameScene(fileNamed:"\(levelName)") else {
             print("Could not make GameScene2, check the name is spelled correctly")
             return
         }
@@ -621,6 +602,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         UserDefaults().set(coinCount, forKey: "COINS")
     }
     
+//    func sizeAdjust() {
+//        playerBoba.removeAllActions()
+//        for enemy in enemyLayer.children as! [SKSpriteNode] {
+//            enemy.removeAllActions()
+//        }
+//        let endGrow: SKAction = SKAction.scale(to: 200, duration: 2.0)
+//        playerBoba.run(endGrow)
+//    }
+    
+    func transitionToNextLevel(levelName: String, themeName: String) {
+        let trans1: SKAction = SKAction.run {
+            self.transition()
+        }
+        let trans2: SKAction = SKAction.run {
+            self.loadNextLevel(levelName: "\(levelName)", themeName: "\(themeName)")
+        }
+        let transitionSeq = SKAction.sequence([trans1, wait, trans2])
+        run(transitionSeq)
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         if gameState == .gameOver {
             buttonRestart.state = .active
@@ -634,10 +635,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             finalScoreLabel.isHidden = false
             highScoreLabel.isHidden = false
             
+            if playerScore > highScore {
+                newHighScore.isHidden = false
+            }
+            
             savedScore = nil
         }
         
-        if playerBoba.size.width > 51 && theme != "table" {
+        if playerBoba.size.width > 60 && theme != "table" {
             if halt {
                 ready = false
             } else {
@@ -646,14 +651,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if ready {
-            let trans1: SKAction = SKAction.run {
-                self.transition()
-            }
-            let trans2: SKAction = SKAction.run {
-                self.loadNextLevel()
-            }
-            let transitionSeq = SKAction.sequence([trans1, wait, trans2])
-            run(transitionSeq)
+//            sizeAdjust()
+            transitionToNextLevel(levelName: "GameScene2", themeName: "table")
             
             halt = true
             ready = false

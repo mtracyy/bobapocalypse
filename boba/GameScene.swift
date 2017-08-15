@@ -25,6 +25,7 @@ enum Direction {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
     var coinCount = UserDefaults.standard.integer(forKey: "COINS")
     var highScore = UserDefaults.standard.integer(forKey: "HIGHSCORE")
     
@@ -98,6 +99,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let locations = [70, 160, 250]
     
+    //paused
+    var pauseBG: SKSpriteNode!
+    var pauseHome: MSButtonNode!
+    var pauseResume: MSButtonNode!
+    var pauseRestart: MSButtonNode!
+    
+    
     //buttons
     var buttonRestart: MSButtonNode!
     var pauseButton: MSButtonNode!
@@ -112,6 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var endScoreBG: SKSpriteNode!
     
     override func didMove(to view: SKView) {
+        
         physicsWorld.contactDelegate = self
         
         playerBoba = self.childNode(withName: "//playerBoba") as! PlayerBoba
@@ -192,10 +201,56 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         homeButton.state = .hidden
         
+        pauseBG = self.childNode(withName: "pauseBG") as! SKSpriteNode
+        pauseBG.isHidden = true
+        
         pauseButton = self.childNode(withName: "pauseButton") as! MSButtonNode
-//        pauseButton.selectedHandler = { [unowned self] in
-//            self.view?.isPaused = true
-//        }
+        pauseButton.selectedHandler = { [unowned self] in
+            self.pauseBG.isHidden = false
+            let pauseAction = SKAction.run {
+//                self.playerBoba.isPaused = true
+//                self.enemySource.isPaused = true
+//                self.enemyLayer.isPaused = true
+//                self.scrollLayer.isPaused = true
+//                self.boss.isPaused = true
+                view.scene?.isPaused = true
+//                self.physicsWorld.speed = 0
+            }
+            self.run(pauseAction)
+        }
+        
+        pauseRestart = pauseBG.childNode(withName: "pauseRestart") as! MSButtonNode
+        pauseRestart.selectedHandler = { [unowned self] in
+            let skView = self.view as SKView! //grab ref to our spritekit view
+            let scene = GameScene(fileNamed: "GameScene") as GameScene! //load game scene
+            scene?.scaleMode = .aspectFill //ensure correct aspect mode
+            theme = "tea"
+            skView?.presentScene(scene) //restart game scene
+        }
+        
+        pauseHome = pauseBG.childNode(withName: "pauseHome") as! MSButtonNode
+        pauseHome.selectedHandler = { [unowned self] in
+            let skView = self.view as SKView!
+            let scene = MainMenu(fileNamed: "MainMenu") as MainMenu!
+            scene?.scaleMode = .aspectFill
+            skView?.presentScene(scene)
+        }
+        
+        pauseResume = pauseBG.childNode(withName: "pauseResume") as! MSButtonNode
+        pauseResume.selectedHandler = { [unowned self] in
+            self.pauseBG.isHidden = true
+            let unpauseAction = SKAction.run {
+//                self.playerBoba.isPaused = false
+//                self.enemySource.isPaused = false
+//                self.enemyLayer.isPaused = false
+//                self.scrollLayer.isPaused = false
+//                self.boss.isPaused = false
+                view.scene?.isPaused = false
+//                self.physicsWorld.speed = 1
+            }
+            self.run(unpauseAction)
+        }
+        
     }
     
     

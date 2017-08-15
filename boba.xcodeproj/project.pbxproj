@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B10B3E101F39FE3200056E6E /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10B3E0F1F39FE3200056E6E /* MainMenu.swift */; };
+		B11455F11F41E1E500B47BE9 /* fingerTut.sks in Resources */ = {isa = PBXBuildFile; fileRef = B11455F01F41E1E500B47BE9 /* fingerTut.sks */; };
 		B11627281F2666A3008F9F21 /* PlayerBoba.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11627271F2666A3008F9F21 /* PlayerBoba.swift */; };
 		B12192161F2A417C001BF85E /* EnemyBoba.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12192151F2A417C001BF85E /* EnemyBoba.swift */; };
 		B134DEEA1F256AB2007FD14A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134DEE91F256AB2007FD14A /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		B10B3E0F1F39FE3200056E6E /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		B11455F01F41E1E500B47BE9 /* fingerTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fingerTut.sks; sourceTree = "<group>"; };
 		B11627271F2666A3008F9F21 /* PlayerBoba.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerBoba.swift; sourceTree = "<group>"; };
 		B12192151F2A417C001BF85E /* EnemyBoba.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyBoba.swift; sourceTree = "<group>"; };
 		B134DEE61F256AB2007FD14A /* boba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boba.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +84,7 @@
 				B134DEE91F256AB2007FD14A /* AppDelegate.swift */,
 				B134DF031F256D81007FD14A /* playerBoba.sks */,
 				B134DEEB1F256AB2007FD14A /* GameScene.sks */,
+				B11455F01F41E1E500B47BE9 /* fingerTut.sks */,
 				B19DD1F01F390A5E008339B6 /* GameScene2.sks */,
 				B134DEED1F256AB2007FD14A /* Actions.sks */,
 				B1F5120D1F27D6A500A0D7D8 /* Items.swift */,
@@ -160,6 +163,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B11455F11F41E1E500B47BE9 /* fingerTut.sks in Resources */,
 				B134DEF51F256AB2007FD14A /* Main.storyboard in Resources */,
 				B134DEEC1F256AB2007FD14A /* GameScene.sks in Resources */,
 				B134DEF71F256AB2007FD14A /* Assets.xcassets in Resources */,

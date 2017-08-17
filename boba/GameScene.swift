@@ -20,6 +20,8 @@ var unlocked = UserDefaults.standard.bool(forKey: "table")
 //    case tea, table
 //}
 var savedScore: Int?
+var savedCoins: Int?
+
 var theme = "tea"
 
 enum Direction {
@@ -28,6 +30,7 @@ enum Direction {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 //    var worldNode: SKNode!
+//    var pause = false
     
     var coinCount = UserDefaults.standard.integer(forKey: "COINS")
     var highScore = UserDefaults.standard.integer(forKey: "HIGHSCORE")
@@ -84,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             updatePlayerSize()
         }
     }
-    var coinScore: Int = 0 {
+    var coinScore: Int = savedCoins ?? 0 {
         didSet {
             if coinScore == 10 {
                 coinLabel.position.x -= 10
@@ -128,6 +131,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.contactDelegate = self
         
+        self.view?.showsPhysics = false
+        self.view?.showsFPS = false
+        self.view?.showsNodeCount = false
+        self.view?.showsDrawCount = false
+
+
         let bgMusic = SKAudioNode(fileNamed: "mellow")
         self.addChild(bgMusic)
         
@@ -192,6 +201,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         buttonRestart = self.childNode(withName: "buttonRestart") as! MSButtonNode
         buttonRestart.selectedHandler = { [unowned self] in
+            savedScore = 10
+            savedCoins = 0
             let skView = self.view as SKView! //grab ref to our spritekit view
             let scene = GameScene(fileNamed: "GameScene") as GameScene! //load game scene
             scene?.scaleMode = .aspectFill //ensure correct aspect mode
@@ -215,9 +226,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         pauseButton = self.childNode(withName: "pauseButton") as! MSButtonNode
         pauseButton.selectedHandler = { [unowned self] in
+//            self.pause = true
             self.pauseBG.isHidden = false
             let pauseAction = SKAction.run {
-                self.boss.isPaused = true
                 self.playerBoba.isPaused = true
                 self.fixedDelta = 0.0
             }
@@ -243,16 +254,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         pauseResume = pauseBG.childNode(withName: "pauseResume") as! MSButtonNode
         pauseResume.selectedHandler = { [unowned self] in
+//            self.pause = false
             self.pauseBG.isHidden = true
             let unpauseAction = SKAction.run {
-//                self.worldNode.isPaused = false
                 self.boss.isPaused = false
                 self.playerBoba.isPaused = false
-//                self.enemySource.isPaused = false
-//                self.enemyLayer.isPaused = false
-//                self.scrollLayer.isPaused = false
-//                self.boss.isPaused = false
-//                view.scene?.isPaused = false
                 self.fixedDelta = 1.0 / 60.0
             }
             self.run(unpauseAction)
@@ -461,6 +467,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func spawnBoss() {
+        if theme == "table" {
+            boss.texture = SKTexture(imageNamed: "armAsset 2")
+        } else if theme == "tea" {
+            boss.texture = SKTexture(imageNamed: "lgstrawrefhap")
+        }
+        
+//        if pause == true { return }
+        
         if bossTimer >= bossSpawnTime + Double(randomBetweenNumbers(firstNum: 5.0, secondNum: 15.0)) && playerBoba.size.width < 100.0 {
             let bossSpawnLoc = CGPoint(x: locations.random(), y: Int(randomBetweenNumbers(firstNum: 250, secondNum: 400)))
             let wait1 = SKAction.wait(forDuration: 2.0)
@@ -490,6 +504,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.shadow.isHidden = true
             }
             let spawn = SKAction.sequence([shadowSpawn, wait1, bossSpawn, wait2, retreat, wait1, end])
+            
+//            if pause == true {
+//                spawn.speed = 0
+//            } else {
+//                spawn.speed = 1
+//            }
+            
             self.run(spawn)
             bossTimer = 0
         }
@@ -626,6 +647,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func loadNextLevel(levelName: String, themeName: String) {
         savedScore = playerScore
+        savedCoins = coinScore
         theme = themeName
         self.whiteTransition.run(self.fadeOut)
         
@@ -710,7 +732,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             savedScore = nil
         }
         
-        if playerBoba.size.width > 70 && theme == "tea" {
+        if playerBoba.size.width > 68 && theme == "tea" {
             
             UserDefaults().set(true, forKey: "table")
             

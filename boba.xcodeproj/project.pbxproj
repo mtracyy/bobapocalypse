@@ -33,6 +33,8 @@
 		B1A757E21F45CE3700ED48D1 /* menuBG.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B1A757E11F45CE3700ED48D1 /* menuBG.mp3 */; };
 		B1A757E51F46038300ED48D1 /* mellow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B1A757E31F46038300ED48D1 /* mellow.mp3 */; };
 		B1A757E61F46038300ED48D1 /* menuBGunity.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B1A757E41F46038300ED48D1 /* menuBGunity.mp3 */; };
+		B1B2A9E41F461ABC008E2F12 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1B2A9E21F461ABC008E2F12 /* Fabric.framework */; };
+		B1B2A9E51F461ABC008E2F12 /* Answers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1B2A9E31F461ABC008E2F12 /* Answers.framework */; };
 		B1B6EA6B1F2B7061004A29D9 /* MSButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B6EA6A1F2B7061004A29D9 /* MSButtonNode.swift */; };
 		B1B6EA6D1F2B79DA004A29D9 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = B1B6EA6C1F2B79DA004A29D9 /* MainMenu.sks */; };
 		B1C115151F447A8300E3DFC8 /* bobaAbsorb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B1C115141F447A8300E3DFC8 /* bobaAbsorb.mp3 */; };
@@ -70,6 +72,8 @@
 		B1A757E11F45CE3700ED48D1 /* menuBG.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menuBG.mp3; sourceTree = "<group>"; };
 		B1A757E31F46038300ED48D1 /* mellow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mellow.mp3; sourceTree = "<group>"; };
 		B1A757E41F46038300ED48D1 /* menuBGunity.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menuBGunity.mp3; sourceTree = "<group>"; };
+		B1B2A9E21F461ABC008E2F12 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		B1B2A9E31F461ABC008E2F12 /* Answers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Answers.framework; sourceTree = SOURCE_ROOT; };
 		B1B6EA6A1F2B7061004A29D9 /* MSButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MSButtonNode.swift; path = boba/MSButtonNode.swift; sourceTree = "<group>"; };
 		B1B6EA6C1F2B79DA004A29D9 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		B1C115141F447A8300E3DFC8 /* bobaAbsorb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bobaAbsorb.mp3; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1B2A9E51F461ABC008E2F12 /* Answers.framework in Frameworks */,
+				B1B2A9E41F461ABC008E2F12 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +142,8 @@
 				B134DEF61F256AB2007FD14A /* Assets.xcassets */,
 				B134DEF81F256AB2007FD14A /* LaunchScreen.storyboard */,
 				B134DEFB1F256AB2007FD14A /* Info.plist */,
+				B1B2A9E21F461ABC008E2F12 /* Fabric.framework */,
+				B1B2A9E31F461ABC008E2F12 /* Answers.framework */,
 			);
 			path = boba;
 			sourceTree = "<group>";
@@ -163,6 +171,7 @@
 				B134DEE21F256AB2007FD14A /* Sources */,
 				B134DEE31F256AB2007FD14A /* Frameworks */,
 				B134DEE41F256AB2007FD14A /* Resources */,
+				B1B2A9E11F461AA6008E2F12 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -239,6 +248,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B1B2A9E11F461AA6008E2F12 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run e2d8241f95f92b55242ac89d346492ee77308261 07f33f2c4e71fc4c18871e9c602651312d8d811a049d5ca9d1f62221472505fe";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B134DEE21F256AB2007FD14A /* Sources */ = {
@@ -378,6 +403,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7T4QL9QUEX;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = boba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Make-School.boba";
@@ -391,6 +420,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7T4QL9QUEX;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = boba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Make-School.boba";

@@ -33,8 +33,8 @@ class MainMenu: SKScene {
         
         
         playButton.selectedHandler = { [unowned self] in
-            savedCoins = 0
-            savedScore = 10
+            savedCoins = nil
+            savedScore = nil
             self.loadGame()
         }
         

@@ -32,6 +32,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    var worldNode: SKNode!
 //    var pause = false
     
+    var comingSoon: SKLabelNode?
+    
     var coinCount = UserDefaults.standard.integer(forKey: "COINS")
     var highScore = UserDefaults.standard.integer(forKey: "HIGHSCORE")
     
@@ -136,7 +138,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.showsNodeCount = false
         self.view?.showsDrawCount = false
 
-
+        comingSoon = self.childNode(withName: "comingSoon") as? SKLabelNode
+        comingSoon?.isHidden = true
+        
         let bgMusic = SKAudioNode(fileNamed: "mellow")
         self.addChild(bgMusic)
         
@@ -201,8 +205,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         buttonRestart = self.childNode(withName: "buttonRestart") as! MSButtonNode
         buttonRestart.selectedHandler = { [unowned self] in
-            savedScore = 10
-            savedCoins = 0
+            savedScore = nil
+            savedCoins = nil
             let skView = self.view as SKView! //grab ref to our spritekit view
             let scene = GameScene(fileNamed: "GameScene") as GameScene! //load game scene
             scene?.scaleMode = .aspectFill //ensure correct aspect mode
@@ -237,6 +241,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         pauseRestart = pauseBG.childNode(withName: "pauseRestart") as! MSButtonNode
         pauseRestart.selectedHandler = { [unowned self] in
+            savedScore = nil
+            savedCoins = nil
             let skView = self.view as SKView! //grab ref to our spritekit view
             let scene = GameScene(fileNamed: "GameScene") as GameScene! //load game scene
             scene?.scaleMode = .aspectFill //ensure correct aspect mode
@@ -355,11 +361,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 } else {
                     gameState = .gameOver
                     setCoinTotal()
-                    
-//                    if playerScore > UserDefaults().integer(forKey: "HIGHSCORE") {
-//                        newHighScore.isHidden = false
-//                        saveHighScore()
-//                    }
                     nodeB?.removeFromParent()
                 }
             }
@@ -382,11 +383,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 } else {
                     gameState = .gameOver
                     setCoinTotal()
-                    
-//                    if playerScore > UserDefaults().integer(forKey: "HIGHSCORE") {
-//                        newHighScore.isHidden = false
-//                        saveHighScore()
-//                    }
                     nodeA?.removeFromParent()
                 }
             }
@@ -476,6 +472,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        if pause == true { return }
         
         if bossTimer >= bossSpawnTime + Double(randomBetweenNumbers(firstNum: 5.0, secondNum: 15.0)) && playerBoba.size.width < 100.0 {
+            boss.isHidden = false
             let bossSpawnLoc = CGPoint(x: locations.random(), y: Int(randomBetweenNumbers(firstNum: 250, secondNum: 400)))
             let wait1 = SKAction.wait(forDuration: 2.0)
             let wait2 = SKAction.wait(forDuration: 1.0)
@@ -495,7 +492,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.boss.run(attack)
             }
             let retreat = SKAction.run {
-                let retreatBoss: SKAction = SKAction.moveTo(y: 960, duration: 1.0)
+                let retreatBoss: SKAction = SKAction.moveTo(y: 1000, duration: 1.0)
                 let retreatShadow: SKAction = SKAction.scale(by: (1/3.0), duration: 2.0)
                 self.boss.run(retreatBoss)
                 self.shadow.run(retreatShadow)
@@ -504,13 +501,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.shadow.isHidden = true
             }
             let spawn = SKAction.sequence([shadowSpawn, wait1, bossSpawn, wait2, retreat, wait1, end])
-            
-//            if pause == true {
-//                spawn.speed = 0
-//            } else {
-//                spawn.speed = 1
-//            }
-            
+
             self.run(spawn)
             bossTimer = 0
         }
@@ -716,6 +707,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 saveHighScore()
             }
             
+            if playerBoba.size.width > 69 && theme == "table" {
+                comingSoon?.isHidden = false
+            }
+            
             buttonRestart.state = .active
             homeButton.state = .active
             coinStatLabel.text = "\(coinScore)"
@@ -732,7 +727,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             savedScore = nil
         }
         
-        if playerBoba.size.width > 68 && theme == "tea" {
+        
+        if playerBoba.size.width > 69 && theme == "tea" {
             
             UserDefaults().set(true, forKey: "table")
             
@@ -741,7 +737,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             } else {
                 ready = true
             }
-        }
+        } 
         
         if ready {
 //            sizeAdjust()

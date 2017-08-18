@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Fabric</key>
@@ -29,6 +29,17 @@
 				<dict/>
 				<key>KitName</key>
 				<string>Answers</string>
+			</dict>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>api-key</key>
+					<string>b3894182b4a1b75cea51e9b8fea4ea7df45821ea</string>
+					<key>api-secret</key>
+					<string>9dc0664b894938e48a4fa40a851027ed0d26e1ed</string>
+				</dict>
+				<key>KitName</key>
+				<string>GameAnalytics</string>
 			</dict>
 		</array>
 	</dict>

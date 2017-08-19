@@ -41,14 +41,14 @@ class MainMenu: SKScene {
         extrasButton.selectedHandler = { [unowned self] in
             let skView = self.view as SKView!
             let scene = extrasScreen(fileNamed: "extrasScreen") as extrasScreen!
-            scene?.scaleMode = .aspectFill
+            scene?.scaleMode = .aspectFit
             skView?.presentScene(scene)
         }
         
         storeButton.selectedHandler = { [unowned self] in
             let skView = self.view as SKView!
             let scene = storeScreen(fileNamed: "storeScreen") as storeScreen!
-            scene?.scaleMode = .aspectFill
+            scene?.scaleMode = .aspectFit
             skView?.presentScene(scene)
         }
         
@@ -76,7 +76,7 @@ class MainMenu: SKScene {
         }
         
         /* 3) Ensure correct aspect mode */
-        scene.scaleMode = .aspectFill
+        scene.scaleMode = .aspectFit
         
         /* Show debug */
         skView.showsPhysics = true

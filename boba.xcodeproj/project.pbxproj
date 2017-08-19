@@ -70,7 +70,6 @@
 		B1A757E11F45CE3700ED48D1 /* menuBG.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menuBG.mp3; sourceTree = "<group>"; };
 		B1A757E31F46038300ED48D1 /* mellow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mellow.mp3; sourceTree = "<group>"; };
 		B1A757E41F46038300ED48D1 /* menuBGunity.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menuBGunity.mp3; sourceTree = "<group>"; };
-		B1B2A9E21F461ABC008E2F12 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		B1B6EA6A1F2B7061004A29D9 /* MSButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MSButtonNode.swift; path = boba/MSButtonNode.swift; sourceTree = "<group>"; };
 		B1B6EA6C1F2B79DA004A29D9 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		B1C115141F447A8300E3DFC8 /* bobaAbsorb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bobaAbsorb.mp3; sourceTree = "<group>"; };
@@ -384,10 +383,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = boba/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Make-School.boba";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tracyma.boba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -401,10 +402,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = boba/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Make-School.boba";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tracyma.boba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

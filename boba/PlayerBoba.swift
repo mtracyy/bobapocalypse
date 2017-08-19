@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class PlayerBoba: SKSpriteNode, SKPhysicsContactDelegate {
-    
+    var canSwipe = true
     var length: CGFloat = 0
     
     let swipeLeft: SKAction = SKAction.init(named: "swipeLeft")!
@@ -18,11 +18,24 @@ class PlayerBoba: SKSpriteNode, SKPhysicsContactDelegate {
     var direction: Direction = .none {
         didSet {
             if direction == .left {
-                if !(self.position.x <= -89.9) {
+                if canSwipe == false { return }
+                if !(self.position.x <= -89.9) && self.position.x > -1.0 && self.position.x < 1.0 {
+                    canSwipe = false
+                    run(swipeLeft) {
+                        self.canSwipe = true
+                    }
+                    
+                } else if !(self.position.x <= -89.9) {
                     run(swipeLeft)
                 }
             } else if direction == .right {
-                if !(self.position.x >= 90) {
+                if canSwipe == false { return }
+                if !(self.position.x >= 90) && self.position.x > -1.0 && self.position.x < 1.0 {
+                    canSwipe = false
+                    run(swipeRight) {
+                        self.canSwipe = true
+                    }
+                } else if !(self.position.x >= 90) {
                     run(swipeRight)
                 }
 

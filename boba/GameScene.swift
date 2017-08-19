@@ -209,7 +209,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             savedCoins = nil
             let skView = self.view as SKView! //grab ref to our spritekit view
             let scene = GameScene(fileNamed: "GameScene") as GameScene! //load game scene
-            scene?.scaleMode = .aspectFill //ensure correct aspect mode
+            scene?.scaleMode = .aspectFit //ensure correct aspect mode
             theme = "tea"
             skView?.presentScene(scene) //restart game scene
             
@@ -220,7 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         homeButton.selectedHandler = { [unowned self] in
             let skView = self.view as SKView!
             let scene = MainMenu(fileNamed: "MainMenu") as MainMenu!
-            scene?.scaleMode = .aspectFill
+            scene?.scaleMode = .aspectFit
             skView?.presentScene(scene)
         }
         homeButton.state = .hidden
@@ -245,7 +245,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             savedCoins = nil
             let skView = self.view as SKView! //grab ref to our spritekit view
             let scene = GameScene(fileNamed: "GameScene") as GameScene! //load game scene
-            scene?.scaleMode = .aspectFill //ensure correct aspect mode
+            scene?.scaleMode = .aspectFit //ensure correct aspect mode
             theme = "tea"
             skView?.presentScene(scene) //restart game scene
         }
@@ -254,7 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseHome.selectedHandler = { [unowned self] in
             let skView = self.view as SKView!
             let scene = MainMenu(fileNamed: "MainMenu") as MainMenu!
-            scene?.scaleMode = .aspectFill
+            scene?.scaleMode = .aspectFit
             skView?.presentScene(scene)
         }
         
@@ -655,7 +655,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         /* 3) Ensure correct aspect mode */
-        scene.scaleMode = .aspectFill
+        scene.scaleMode = .aspectFit
         
         /* Show debug */
         skView.showsPhysics = true
@@ -697,6 +697,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
         if gameState == .gameOver {
             if let fingerTut = fingerTut {
                 fingerTut.isHidden = true
@@ -707,7 +708,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 saveHighScore()
             }
             
-            if playerBoba.size.width > 69 && theme == "table" {
+            if playerBoba.size.width > 70 && theme == "table" {
                 comingSoon?.isHidden = false
             }
             
@@ -728,7 +729,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-        if playerBoba.size.width > 69 && theme == "tea" {
+        if playerBoba.size.width > 70 && theme == "tea" {
             
             UserDefaults().set(true, forKey: "table")
             

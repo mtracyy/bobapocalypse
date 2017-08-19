@@ -23,7 +23,7 @@ class storeScreen: SKScene {
         homeButton.selectedHandler = { [unowned self] in
             let skView = self.view as SKView!
             let scene = MainMenu(fileNamed: "MainMenu") as MainMenu!
-            scene?.scaleMode = .aspectFill
+            scene?.scaleMode = .aspectFit
             skView?.presentScene(scene)
         }
     }

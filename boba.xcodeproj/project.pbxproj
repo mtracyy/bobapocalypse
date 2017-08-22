@@ -18,6 +18,36 @@
 		B11934461F454DA60042E37A /* storeScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = B11934451F454DA60042E37A /* storeScreen.sks */; };
 		B11934481F4551DD0042E37A /* storeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11934471F4551DD0042E37A /* storeScreen.swift */; };
 		B12192161F2A417C001BF85E /* EnemyBoba.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12192151F2A417C001BF85E /* EnemyBoba.swift */; };
+		B12193B81F4CA3C300BACF48 /* GameScene3.sks in Resources */ = {isa = PBXBuildFile; fileRef = B12193B71F4CA3C300BACF48 /* GameScene3.sks */; };
+		B12193BA1F4CB44100BACF48 /* Tapjoy.embeddedframework in Resources */ = {isa = PBXBuildFile; fileRef = B12193B91F4CB44100BACF48 /* Tapjoy.embeddedframework */; };
+		B12193D81F4CB65000BACF48 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193BC1F4CB65000BACF48 /* AdSupport.framework */; };
+		B12193D91F4CB65000BACF48 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193BD1F4CB65000BACF48 /* CFNetwork.framework */; };
+		B12193DA1F4CB65000BACF48 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193BE1F4CB65000BACF48 /* CoreData.framework */; };
+		B12193DB1F4CB65000BACF48 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193BF1F4CB65000BACF48 /* CoreGraphics.framework */; };
+		B12193DC1F4CB65000BACF48 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C01F4CB65000BACF48 /* CoreLocation.framework */; };
+		B12193DD1F4CB65000BACF48 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C11F4CB65000BACF48 /* CoreMotion.framework */; };
+		B12193DE1F4CB65000BACF48 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C21F4CB65000BACF48 /* CoreTelephony.framework */; };
+		B12193DF1F4CB65000BACF48 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C31F4CB65000BACF48 /* EventKit.framework */; };
+		B12193E01F4CB65000BACF48 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C41F4CB65000BACF48 /* EventKitUI.framework */; };
+		B12193E11F4CB65000BACF48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C51F4CB65000BACF48 /* Foundation.framework */; };
+		B12193E21F4CB65000BACF48 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C61F4CB65000BACF48 /* ImageIO.framework */; };
+		B12193E31F4CB65000BACF48 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C71F4CB65000BACF48 /* libc++.tbd */; };
+		B12193E41F4CB65000BACF48 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C81F4CB65000BACF48 /* libsqlite3.0.tbd */; };
+		B12193E51F4CB65000BACF48 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193C91F4CB65000BACF48 /* libxml2.tbd */; };
+		B12193E61F4CB65000BACF48 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193CA1F4CB65000BACF48 /* libz.tbd */; };
+		B12193E71F4CB65000BACF48 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193CB1F4CB65000BACF48 /* MapKit.framework */; };
+		B12193E81F4CB65000BACF48 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193CC1F4CB65000BACF48 /* MediaPlayer.framework */; };
+		B12193E91F4CB65000BACF48 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193CD1F4CB65000BACF48 /* MessageUI.framework */; };
+		B12193EA1F4CB65000BACF48 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193CE1F4CB65000BACF48 /* MobileCoreServices.framework */; };
+		B12193EB1F4CB65000BACF48 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193CF1F4CB65000BACF48 /* PassKit.framework */; };
+		B12193EC1F4CB65000BACF48 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193D01F4CB65000BACF48 /* QuartzCore.framework */; };
+		B12193ED1F4CB65000BACF48 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193D11F4CB65000BACF48 /* Security.framework */; };
+		B12193EE1F4CB65000BACF48 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193D21F4CB65000BACF48 /* Social.framework */; };
+		B12193EF1F4CB65000BACF48 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193D31F4CB65000BACF48 /* StoreKit.framework */; };
+		B12193F01F4CB65000BACF48 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193D41F4CB65000BACF48 /* SystemConfiguration.framework */; };
+		B12193F11F4CB65000BACF48 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193D51F4CB65000BACF48 /* Twitter.framework */; };
+		B12193F21F4CB65000BACF48 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193D61F4CB65000BACF48 /* UIKit.framework */; };
+		B12193F31F4CB65000BACF48 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12193D71F4CB65000BACF48 /* WebKit.framework */; };
 		B134DEEA1F256AB2007FD14A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134DEE91F256AB2007FD14A /* AppDelegate.swift */; };
 		B134DEEC1F256AB2007FD14A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B134DEEB1F256AB2007FD14A /* GameScene.sks */; };
 		B134DEEE1F256AB2007FD14A /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B134DEED1F256AB2007FD14A /* Actions.sks */; };
@@ -53,6 +83,36 @@
 		B11934451F454DA60042E37A /* storeScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = storeScreen.sks; sourceTree = "<group>"; };
 		B11934471F4551DD0042E37A /* storeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = storeScreen.swift; sourceTree = "<group>"; };
 		B12192151F2A417C001BF85E /* EnemyBoba.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyBoba.swift; sourceTree = "<group>"; };
+		B12193B71F4CA3C300BACF48 /* GameScene3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene3.sks; sourceTree = "<group>"; };
+		B12193B91F4CB44100BACF48 /* Tapjoy.embeddedframework */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Tapjoy.embeddedframework; path = ../../../../Downloads/TapjoySDK_iOS_v11.11.0/Libraries/Tapjoy.embeddedframework; sourceTree = "<group>"; };
+		B12193BC1F4CB65000BACF48 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		B12193BD1F4CB65000BACF48 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		B12193BE1F4CB65000BACF48 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B12193BF1F4CB65000BACF48 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B12193C01F4CB65000BACF48 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B12193C11F4CB65000BACF48 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		B12193C21F4CB65000BACF48 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		B12193C31F4CB65000BACF48 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		B12193C41F4CB65000BACF48 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		B12193C51F4CB65000BACF48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B12193C61F4CB65000BACF48 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		B12193C71F4CB65000BACF48 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		B12193C81F4CB65000BACF48 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		B12193C91F4CB65000BACF48 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		B12193CA1F4CB65000BACF48 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		B12193CB1F4CB65000BACF48 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B12193CC1F4CB65000BACF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		B12193CD1F4CB65000BACF48 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		B12193CE1F4CB65000BACF48 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		B12193CF1F4CB65000BACF48 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		B12193D01F4CB65000BACF48 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B12193D11F4CB65000BACF48 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B12193D21F4CB65000BACF48 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		B12193D31F4CB65000BACF48 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B12193D41F4CB65000BACF48 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B12193D51F4CB65000BACF48 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		B12193D61F4CB65000BACF48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B12193D71F4CB65000BACF48 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		B134DEE61F256AB2007FD14A /* boba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B134DEE91F256AB2007FD14A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B134DEEB1F256AB2007FD14A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -83,20 +143,85 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B12193D81F4CB65000BACF48 /* AdSupport.framework in Frameworks */,
+				B12193D91F4CB65000BACF48 /* CFNetwork.framework in Frameworks */,
+				B12193DA1F4CB65000BACF48 /* CoreData.framework in Frameworks */,
+				B12193DB1F4CB65000BACF48 /* CoreGraphics.framework in Frameworks */,
+				B12193DC1F4CB65000BACF48 /* CoreLocation.framework in Frameworks */,
+				B12193DD1F4CB65000BACF48 /* CoreMotion.framework in Frameworks */,
+				B12193DE1F4CB65000BACF48 /* CoreTelephony.framework in Frameworks */,
+				B12193DF1F4CB65000BACF48 /* EventKit.framework in Frameworks */,
+				B12193E01F4CB65000BACF48 /* EventKitUI.framework in Frameworks */,
+				B12193E11F4CB65000BACF48 /* Foundation.framework in Frameworks */,
+				B12193E21F4CB65000BACF48 /* ImageIO.framework in Frameworks */,
+				B12193E31F4CB65000BACF48 /* libc++.tbd in Frameworks */,
+				B12193E41F4CB65000BACF48 /* libsqlite3.0.tbd in Frameworks */,
+				B12193E51F4CB65000BACF48 /* libxml2.tbd in Frameworks */,
+				B12193E61F4CB65000BACF48 /* libz.tbd in Frameworks */,
+				B12193E71F4CB65000BACF48 /* MapKit.framework in Frameworks */,
+				B12193E81F4CB65000BACF48 /* MediaPlayer.framework in Frameworks */,
+				B12193E91F4CB65000BACF48 /* MessageUI.framework in Frameworks */,
+				B12193EA1F4CB65000BACF48 /* MobileCoreServices.framework in Frameworks */,
+				B12193EB1F4CB65000BACF48 /* PassKit.framework in Frameworks */,
+				B12193EC1F4CB65000BACF48 /* QuartzCore.framework in Frameworks */,
+				B12193ED1F4CB65000BACF48 /* Security.framework in Frameworks */,
+				B12193EE1F4CB65000BACF48 /* Social.framework in Frameworks */,
+				B12193EF1F4CB65000BACF48 /* StoreKit.framework in Frameworks */,
+				B12193F01F4CB65000BACF48 /* SystemConfiguration.framework in Frameworks */,
+				B12193F11F4CB65000BACF48 /* Twitter.framework in Frameworks */,
+				B12193F21F4CB65000BACF48 /* UIKit.framework in Frameworks */,
+				B12193F31F4CB65000BACF48 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B12193BB1F4CB65000BACF48 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B12193BC1F4CB65000BACF48 /* AdSupport.framework */,
+				B12193BD1F4CB65000BACF48 /* CFNetwork.framework */,
+				B12193BE1F4CB65000BACF48 /* CoreData.framework */,
+				B12193BF1F4CB65000BACF48 /* CoreGraphics.framework */,
+				B12193C01F4CB65000BACF48 /* CoreLocation.framework */,
+				B12193C11F4CB65000BACF48 /* CoreMotion.framework */,
+				B12193C21F4CB65000BACF48 /* CoreTelephony.framework */,
+				B12193C31F4CB65000BACF48 /* EventKit.framework */,
+				B12193C41F4CB65000BACF48 /* EventKitUI.framework */,
+				B12193C51F4CB65000BACF48 /* Foundation.framework */,
+				B12193C61F4CB65000BACF48 /* ImageIO.framework */,
+				B12193C71F4CB65000BACF48 /* libc++.tbd */,
+				B12193C81F4CB65000BACF48 /* libsqlite3.0.tbd */,
+				B12193C91F4CB65000BACF48 /* libxml2.tbd */,
+				B12193CA1F4CB65000BACF48 /* libz.tbd */,
+				B12193CB1F4CB65000BACF48 /* MapKit.framework */,
+				B12193CC1F4CB65000BACF48 /* MediaPlayer.framework */,
+				B12193CD1F4CB65000BACF48 /* MessageUI.framework */,
+				B12193CE1F4CB65000BACF48 /* MobileCoreServices.framework */,
+				B12193CF1F4CB65000BACF48 /* PassKit.framework */,
+				B12193D01F4CB65000BACF48 /* QuartzCore.framework */,
+				B12193D11F4CB65000BACF48 /* Security.framework */,
+				B12193D21F4CB65000BACF48 /* Social.framework */,
+				B12193D31F4CB65000BACF48 /* StoreKit.framework */,
+				B12193D41F4CB65000BACF48 /* SystemConfiguration.framework */,
+				B12193D51F4CB65000BACF48 /* Twitter.framework */,
+				B12193D61F4CB65000BACF48 /* UIKit.framework */,
+				B12193D71F4CB65000BACF48 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B134DEDD1F256AB2007FD14A = {
 			isa = PBXGroup;
 			children = (
+				B12193B91F4CB44100BACF48 /* Tapjoy.embeddedframework */,
 				B119343A1F4534560042E37A /* Assets.xcassets */,
 				B134DEE81F256AB2007FD14A /* boba */,
 				B134DEE71F256AB2007FD14A /* Products */,
 				B1B6EA6A1F2B7061004A29D9 /* MSButtonNode.swift */,
 				B1C115161F447A8900E3DFC8 /* SFX */,
+				B12193BB1F4CB65000BACF48 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,8 +239,9 @@
 				B134DEE91F256AB2007FD14A /* AppDelegate.swift */,
 				B134DF031F256D81007FD14A /* playerBoba.sks */,
 				B134DEEB1F256AB2007FD14A /* GameScene.sks */,
-				B11455F01F41E1E500B47BE9 /* fingerTut.sks */,
 				B19DD1F01F390A5E008339B6 /* GameScene2.sks */,
+				B12193B71F4CA3C300BACF48 /* GameScene3.sks */,
+				B11455F01F41E1E500B47BE9 /* fingerTut.sks */,
 				B134DEED1F256AB2007FD14A /* Actions.sks */,
 				B1F5120D1F27D6A500A0D7D8 /* Items.swift */,
 				B1F5120F1F27D89000A0D7D8 /* EnemyBoba.sks */,
@@ -223,6 +349,7 @@
 				B134DEEC1F256AB2007FD14A /* GameScene.sks in Resources */,
 				B134DEF71F256AB2007FD14A /* Assets.xcassets in Resources */,
 				B134DEFA1F256AB2007FD14A /* LaunchScreen.storyboard in Resources */,
+				B12193B81F4CA3C300BACF48 /* GameScene3.sks in Resources */,
 				B1A757E61F46038300ED48D1 /* menuBGunity.mp3 in Resources */,
 				B119343C1F4534560042E37A /* Assets.xcassets in Resources */,
 				B1A757E21F45CE3700ED48D1 /* menuBG.mp3 in Resources */,
@@ -233,6 +360,7 @@
 				B134DF041F256D81007FD14A /* playerBoba.sks in Resources */,
 				B134DEEE1F256AB2007FD14A /* Actions.sks in Resources */,
 				B19DD1F11F390A5E008339B6 /* GameScene2.sks in Resources */,
+				B12193BA1F4CB44100BACF48 /* Tapjoy.embeddedframework in Resources */,
 				B11934361F44FBB40042E37A /* coinCollect.mp3 in Resources */,
 				B15E6BBE1F437AB90070B620 /* light.sks in Resources */,
 			);

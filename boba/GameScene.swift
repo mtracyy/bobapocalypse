@@ -347,9 +347,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if enemy.size.width <= player.size.width {
                     run(bobaAbsorbed)
                     playerScore += enemy.getPoints()
-                    print(player.size.width)
-                    scaleFactor = (Double(enemy.getPoints()) * 0.001) + 1
-                    print(player.size.width)
+//                    print(player.size.width)
+//                    scaleFactor = (Double(enemy.getPoints()) * 0.001) + 1
                     nodeA?.removeFromParent()
                     if scrollSpeed <= 350 {
                         scrollSpeed += 7
@@ -371,8 +370,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if enemy.size.width <= player.size.width {
                     run(bobaAbsorbed)
                     playerScore += enemy.getPoints()
-                    scaleFactor = (Double(enemy.getPoints()) * 0.001) + 1
-                    print(player.size.width)
+//                    scaleFactor = (Double(enemy.getPoints()) * 0.001) + 1
+//                    print(player.size.width)
                     nodeB?.removeFromParent()
                     if scrollSpeed <= 350 {
                         scrollSpeed += 7
@@ -439,8 +438,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updatePlayerSize() {
-        let grow: SKAction = SKAction.scale(by: CGFloat(scaleFactor), duration: 1.0)
-        playerBoba.run(grow)
+//        if playerBoba.size.width < 55 {
+////            let grow: SKAction = SKAction.scale(by: CGFloat(scaleFactor), duration: 1.0)
+////            playerBoba.run(grow)
+//            
+//            let grow: SKAction = SKAction.scale(to: 1.1, duration: 1.0)
+//            playerBoba.run(grow)
+//        }
         
         for case let enemy as EnemyBoba in enemyLayer.children {
             for case let enemyLabel as SKLabelNode in enemy.children {
@@ -452,7 +456,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         let zoomOut: SKAction = SKAction.scale(by: CGFloat(playerBoba.size.width/enemy.size.width), duration: 0.5)
                         enemy.run(zoomOut)
                     } else if label == playerScore {
-                        let adjust: SKAction = SKAction.scale(to: playerBoba.size, duration: 1.0)
+                        let adjust: SKAction = SKAction.scale(to: playerBoba.size, duration: 0.5)
                         enemy.run(adjust)
                     }
                 }
@@ -697,6 +701,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        print(playerBoba.size.width)
         
         if gameState == .gameOver {
             if let fingerTut = fingerTut {
@@ -708,7 +713,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 saveHighScore()
             }
             
-            if playerBoba.size.width > 70 && theme == "table" {
+            if playerScore >= 600 && theme == "table" {
                 comingSoon?.isHidden = false
             }
             
@@ -729,7 +734,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-        if playerBoba.size.width > 70 && theme == "tea" {
+        if playerScore >= 350 && theme == "tea" {
             
             UserDefaults().set(true, forKey: "table")
             

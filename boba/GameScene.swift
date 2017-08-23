@@ -543,10 +543,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newSize.fontColor = UIColor.black
                 
             } else if theme == "sidewalk" {
-                if newScale <= 0.6 {
+                if newScale <= 0.4 {
+                    newEnemy.texture = SKTexture(imageNamed: "gum")
+                }else if newScale > 0.4 && newScale <= 0.6  {
                     newEnemy.texture = SKTexture(imageNamed: "apple")
                 } else if newScale > 0.6 && newScale <= 1.0 {
-                    newEnemy.texture = SKTexture(imageNamed: "crisps")
+                    newEnemy.texture = SKTexture(imageNamed: "drink6")
                 } else if newScale > 1.0 {
                     newEnemy.texture = SKTexture(imageNamed: "pigeon")
                 }
@@ -618,7 +620,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let waitWhite = SKAction.wait(forDuration: 0.5)
         
         let glassCrack = SKAction.run {
-            print("glass should crack")
+//            print("glass should crack")
             self.crack.isHidden = false
             self.crack.run(self.burst)
         }
@@ -636,7 +638,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        }
         
         let endTransition = SKAction.run {
-            print("fade should happen")
+//            print("fade should happen")
             self.whiteTransition.isHidden = false
             let fadeIn = SKAction.run{
                 self.whiteTransition.run(self.fadeIn)

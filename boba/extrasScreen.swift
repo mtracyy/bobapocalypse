@@ -11,10 +11,14 @@ import SpriteKit
 class extrasScreen: SKScene {
     var homeButton: MSButtonNode!
     var lvlTable: SKSpriteNode!
+    var lvlSidewalk: SKSpriteNode!
     
     override func didMove(to view: SKView) {
         lvlTable = self.childNode(withName: "lvlTable") as! SKSpriteNode
         lvlTable.isHidden = true
+        
+        lvlSidewalk = self.childNode(withName: "lvlSidewalk") as! SKSpriteNode
+        lvlSidewalk.isHidden = true
         
         let bgMusic = SKAudioNode(fileNamed: "menuBGunity")
         self.addChild(bgMusic)
@@ -23,6 +27,10 @@ class extrasScreen: SKScene {
         
         if UserDefaults().bool(forKey: "table") == true {
             lvlTable.isHidden = false
+        }
+        
+        if UserDefaults().bool(forKey: "sidewalk") == true {
+            lvlSidewalk.isHidden = false
         }
         
         

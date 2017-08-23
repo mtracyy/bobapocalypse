@@ -14,7 +14,8 @@ enum GameSceneState {
     case active, gameOver
 }
 
-var unlocked = UserDefaults.standard.bool(forKey: "table")
+var unlockedTable = UserDefaults.standard.bool(forKey: "table")
+var unlockedSidewalk = UserDefaults.standard.bool(forKey: "sidewalk")
 
 //enum themeState {
 //    case tea, table
@@ -192,7 +193,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         newHighScore.isHidden = true
         endScoreBG.isHidden = true
         
-        if theme == "table" {
+        if theme == "table" || theme == "sidewalk" {
             scoreLabel.fontColor = UIColor.black
             coinLabel.fontColor = UIColor.black
         }
@@ -438,10 +439,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updatePlayerSize() {
-//        if playerBoba.size.width < 55 {
-////            let grow: SKAction = SKAction.scale(by: CGFloat(scaleFactor), duration: 1.0)
-////            playerBoba.run(grow)
-//            
+//        if playerScore > 900 && theme == "sidewalk" {
+//            let grow: SKAction = SKAction.scale(by: CGFloat(scaleFactor), duration: 1.0)
+//            playerBoba.run(grow)
+//        }
 //            let grow: SKAction = SKAction.scale(to: 1.1, duration: 1.0)
 //            playerBoba.run(grow)
 //        }
@@ -467,10 +468,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func spawnBoss() {
-        if theme == "table" {
-            boss.texture = SKTexture(imageNamed: "armAsset 2")
-        } else if theme == "tea" {
+        if theme == "tea" {
             boss.texture = SKTexture(imageNamed: "lgstrawrefhap")
+        } else if theme == "table" {
+            boss.texture = SKTexture(imageNamed: "armAsset 2")
+        } else if theme == "sidewalk" {
+            boss.texture = SKTexture(imageNamed: "leg")
         }
         
 //        if pause == true { return }
@@ -527,7 +530,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let newSize = sizeLabel.copy() as! SKLabelNode
             let newScale = randomBetweenNumbers(firstNum: 0.2, secondNum: 1.2)
             
-            if theme == "table" {
+            if theme == "tea" {
+                newEnemy.texture = SKTexture(imageNamed: "test_0005_Layer-1-copy-4")
+            } else if theme == "table" {
                 if newScale <= 0.6 {
                     newEnemy.texture = SKTexture(imageNamed: "donut")
                 } else if newScale > 0.6 && newScale <= 1.0 {
@@ -535,10 +540,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 } else if newScale > 1.0 {
                     newEnemy.texture = SKTexture(imageNamed: "pizza")
                 }
-                
                 newSize.fontColor = UIColor.black
-            } else if theme == "tea" {
-                        newEnemy.texture = SKTexture(imageNamed: "test_0005_Layer-1-copy-4")
+                
+            } else if theme == "sidewalk" {
+                if newScale <= 0.6 {
+                    newEnemy.texture = SKTexture(imageNamed: "apple")
+                } else if newScale > 0.6 && newScale <= 1.0 {
+                    newEnemy.texture = SKTexture(imageNamed: "crisps")
+                } else if newScale > 1.0 {
+                    newEnemy.texture = SKTexture(imageNamed: "pigeon")
+                }
+                newSize.fontColor = UIColor.white
             }
             
             newEnemy.setScale(CGFloat(newScale))
@@ -579,7 +591,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     bubbles.position = self.convert(newPos, to: scrollLayer)
                 }
             }
-        } else if theme == "table" {
+        } else if theme == "table" || theme == "sidewalk" {
             scrollLayer.position.y += scrollSpeed * CGFloat(fixedDelta)
             for bubbles in scrollLayer.children as! [SKSpriteNode] {
                 let bubblesPos = scrollLayer.convert(bubbles.position, to: self)
@@ -700,8 +712,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         run(transitionSeq)
     }
     
+    func checkTransition(){
+        if halt {
+            ready = false
+        } else {
+            ready = true
+        }
+    }
+    
     override func update(_ currentTime: TimeInterval) {
-        print(playerBoba.size.width)
+//        print(playerBoba.size.width)
+        scrollWorld()
+        updateEnemies()
+        updateCoins()
+        spawnBoss()
+        spawnTimer += fixedDelta
+        coinTimer += fixedDelta
+        bossTimer += fixedDelta
         
         if gameState == .gameOver {
             if let fingerTut = fingerTut {
@@ -713,7 +740,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 saveHighScore()
             }
             
-            if playerScore >= 600 && theme == "table" {
+            if playerScore >= 900 && theme == "sidewalk" {
                 comingSoon?.isHidden = false
             }
             
@@ -734,32 +761,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-        if playerScore >= 350 && theme == "tea" {
-            
+        if playerScore >= 300 && theme == "tea" {
             UserDefaults().set(true, forKey: "table")
-            
-            if halt {
+            checkTransition()
+            if ready {
+                transitionToNextLevel(levelName: "GameScene2", themeName: "table")
+                halt = true
                 ready = false
-            } else {
-                ready = true
             }
-        } 
-        
-        if ready {
-//            sizeAdjust()
-            transitionToNextLevel(levelName: "GameScene2", themeName: "table")
-            
-            halt = true
-            ready = false
         }
         
-        scrollWorld()
-        updateEnemies()
-        updateCoins()
-        spawnBoss()
-        spawnTimer += fixedDelta
-        coinTimer += fixedDelta
-        bossTimer += fixedDelta
+        if playerScore >= 600 && theme == "table" {
+            UserDefaults().set(true, forKey: "sidewalk")
+            checkTransition()
+            if ready {
+                transitionToNextLevel(levelName: "GameScene3", themeName: "sidewalk")
+                halt = true
+                ready = false
+            }
+        }
         
     }
     
